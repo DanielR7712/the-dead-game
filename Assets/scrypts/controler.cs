@@ -6,13 +6,14 @@ public class controler : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private float jumpforce;
     private Rigidbody rb;
-    [SerializeField]
-    private Transform ca;
+    [SerializeField] private Transform ca;
     private Vector3 turn;
-    [SerializeField]
-    private float horisental_sensitive;
-    [SerializeField]
-    private float vertical_sensitive;
+
+    [SerializeField] private float horisental_sensitive;
+    [SerializeField] private float vertical_sensitive;
+
+    [SerializeField] private CheckTerrain checker;
+
     void playerotate()
     {
         float vertical=Input.GetAxis("Mouse Y")*vertical_sensitive;
@@ -28,35 +29,26 @@ public class controler : MonoBehaviour
         if (Input.GetKey(KeyCode.W))
         {
             rb.AddForce(transform.forward * speed);
-
         }
      
         if (Input.GetKey(KeyCode.S))
         {
             rb.AddForce(-transform.forward * speed);
-
-
         }
 
         if (Input.GetKey(KeyCode.D))
         { 
-            rb.AddForce(transform.right * speed);
-        
-        
+            rb.AddForce(transform.right * speed);      
         }
 
         if (Input.GetKey(KeyCode.A))
         {
             rb.AddForce(-transform.right * speed);
-
-
         }
 
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && checker.IsCollide)
         {
-            rb.AddForce(transform.up *  speed);
-
-
+            rb.AddForce(transform.up * jumpforce);
         }
     }   
 
