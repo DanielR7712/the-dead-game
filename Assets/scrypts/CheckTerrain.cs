@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public class CheckTerrain : MonoBehaviour
 {
@@ -8,6 +9,70 @@ public class CheckTerrain : MonoBehaviour
     [SerializeField] private float rayLength = 5f;
 
     private List<Vector3> coneDirections = new List<Vector3>();
+
+
+
+    public bool iscollide { get; private set; }
+    void checkcollide(List<Vector3> directions)
+    {
+        foreach (Vector3 ray in directions) 
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, ray, out hit, rayLength))
+            {
+                iscollide = true;
+                return;
+
+
+            }
+        
+
+        }
+        iscollide = false;
+
+
+    }
+    private void FixedUpdate()
+    {
+       checkcollide(coneDirections); 
+
+
+    }
+
+    public class PlayerController :
+    MonoBehaviour
+    {
+        public Rigidbody rb;
+        public float jumpForce = 5f;
+        public bool isCollide;
+
+        private void Update()
+        {
+            if
+            (Input.GetKeyDown(KeyCode.Space) && !isCollide)
+
+            rb.AddForce(Vector3.up * jumpForce,ForceMode.Impulse);
+
+
+
+
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+    }
+
+
+        
 
     void Start()
     {
